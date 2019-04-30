@@ -1,0 +1,52 @@
+﻿@model IEnumerable<milkrate.Models.Piece>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<body>
+ 
+
+    <div class="d-flex justify-content-center" style="flex-basis: 20%; flex-wrap: wrap; margin: auto;">
+
+        @foreach (var item in Model)
+        {
+
+
+            @*<div class="d-flex" style="flex-direction: column;  margin: auto; ">
+
+                <img style="width: 100px; height: 100px;" src="@Url.Content(item.ImageLink)" alt="Image" />
+
+                @Html.DisplayFor(modelItem => item.Title)
+                <div>
+
+                    @if (item.AveragePrice > 1)
+                    {
+                        @Html.DisplayFor(modelItem => item.AveragePrice)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.RetailPrice)
+                    }
+                </div>
+
+            </div>*@
+            <div class="card text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
+                <div >
+                    <img style="max-height: 100px; max-width: 100px;" class="card-img-top" src="@Url.Content(item.ImageLink)" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        @if (item.AveragePrice > 1)
+                        {
+                            @Html.DisplayFor(modelItem => item.AveragePrice)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.RetailPrice)
+                        }
+                    </div>
+                </div>
+           </div>
+        }
+    </div>
+    
+</body>
