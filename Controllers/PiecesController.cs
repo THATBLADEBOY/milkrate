@@ -20,9 +20,37 @@ namespace milkrate.Controllers
         }
 
         // GET: Pieces
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            return View(await _context.Piece.ToListAsync());
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+            var pieces = from p in _context.Piece
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pieces = pieces.Where(p => p.Title.Contains(searchString)
+                                       || p.PieceType.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    pieces = pieces.OrderByDescending(p => p.Title);
+                    break;
+                case "Date":
+                    pieces = pieces.OrderBy(p => p.ReleaseDate);
+                    break;
+                case "date_desc":
+                    pieces = pieces.OrderByDescending(p => p.ReleaseDate);
+                    break;
+                default:
+                    pieces = pieces.OrderBy(p => p.ReleaseDate);
+                    break;
+            }
+
+            return View(await pieces.AsNoTracking().ToListAsync());
         }
 
         // GET: Pieces/Details/5

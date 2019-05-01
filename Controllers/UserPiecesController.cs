@@ -30,7 +30,7 @@ namespace milkrate.Controllers
         {
             var user = await GetCurrentUserAsync();
 
-            var applicationDbContext = _context.UserPiece.Where(p => p.UserId == user.Id);
+            var applicationDbContext = _context.UserPiece.Include(p => p.Piece).Where(p => p.UserId == user.Id);
 
             return View(await applicationDbContext.ToListAsync());
         }
