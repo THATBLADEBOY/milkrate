@@ -17,9 +17,11 @@ namespace milkrate.Models
 
         public int PieceId { get; set; }
 
-        public int Value { get; set; }
+        public decimal Value { get; set; }
 
         public Piece Piece { get; set; }
+
+        public Condition Condition { get; set; }
 
         public ApplicationUser User { get; set; }
     }

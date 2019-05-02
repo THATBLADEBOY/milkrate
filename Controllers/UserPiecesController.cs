@@ -54,8 +54,9 @@ namespace milkrate.Controllers
         }
 
         // GET: UserPieces/Create
-        public IActionResult Create()
+        public IActionResult Create(int ID)
         {
+            ViewData["ConditionId"] = new SelectList(_context.Condition, "Id", "Name");
             return View();
         }
 
@@ -64,14 +65,23 @@ namespace milkrate.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ConditionId,UserId,PieceId,Value")] UserPiece userPiece)
+        public async Task<IActionResult> Create([Bind("ConditionId,UserId,PieceId,Value")] UserPiece userPiece, int ID)
         {
+            
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                userPiece.UserId = user.Id;
+                userPiece.PieceId = ID;
+                ModelState.Remove("usePiece.Id");
+                userPiece.Piece =  _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
+                userPiece.Condition = _context.Condition.Where(c => c.Id == userPiece.ConditionId).FirstOrDefault();
+                userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
                 _context.Add(userPiece);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ConditionId"] = new SelectList(_context.Condition, "Id", "Name", userPiece.ConditionId);
             return View(userPiece);
         }
 

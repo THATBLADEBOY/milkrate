@@ -36,14 +36,9 @@
                     <img style="max-height: 100px; max-width: 100px;" class="card-img-top" src="@Url.Content(item.Piece.ImageLink)" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Piece.Title)</h5>
-                        @if (item.Piece.AveragePrice > 1)
-                        {
-                            @Html.DisplayFor(modelItem => item.Piece.AveragePrice)
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.Piece.RetailPrice)
-                        }
+                      
+                            @Html.DisplayFor(modelItem => item.Value)
+                       
                     </div>
                 </div>
             </div>

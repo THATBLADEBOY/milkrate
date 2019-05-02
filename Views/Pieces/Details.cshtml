@@ -48,6 +48,9 @@
         </dd>
     </dl>
     <button type="button" class="btn btn-success" onclick="window.location.href = '@Html.DisplayFor(model => model.PageLink)';" target="_blank">Sell $</button>
+
+    <a class="btn btn-primary" asp-controller="UserPieces" asp-action="Create" asp-route-id="@Model.ID">Add To Closet</a>
+
 </div>
 <div>
     <a asp-action="Index">Back to List</a>

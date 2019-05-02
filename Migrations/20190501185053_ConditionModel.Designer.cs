@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using milkrate.Data;
 
 namespace milkrate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190501185053_ConditionModel")]
+    partial class ConditionModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,21 +186,6 @@ namespace milkrate.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("milkrate.Models.Condition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<decimal>("ValueMeasure");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Condition");
-                });
-
             modelBuilder.Entity("milkrate.Models.Piece", b =>
                 {
                     b.Property<int>("ID")
@@ -240,11 +227,9 @@ namespace milkrate.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.Property<decimal>("Value");
+                    b.Property<int>("Value");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConditionId");
 
                     b.HasIndex("PieceId");
 
@@ -300,11 +285,6 @@ namespace milkrate.Migrations
 
             modelBuilder.Entity("milkrate.Models.UserPiece", b =>
                 {
-                    b.HasOne("milkrate.Models.Condition", "Condition")
-                        .WithMany()
-                        .HasForeignKey("ConditionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("milkrate.Models.Piece", "Piece")
                         .WithMany()
                         .HasForeignKey("PieceId")
