@@ -76,7 +76,12 @@ namespace milkrate.Controllers
                 ModelState.Remove("usePiece.Id");
                 userPiece.Piece =  _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
                 userPiece.Condition = _context.Condition.Where(c => c.Id == userPiece.ConditionId).FirstOrDefault();
-                userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
+                if(userPiece.Piece.AveragePrice != 0) { 
+                    userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
+                } else
+                {
+                    userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.RetailPrice;
+                }
                 _context.Add(userPiece);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -119,7 +124,14 @@ namespace milkrate.Controllers
                 {
                     userPiece.Piece = _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
                     userPiece.Condition = _context.Condition.Where(c => c.Id == userPiece.ConditionId).FirstOrDefault();
-                    userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
+                    if (userPiece.Piece.AveragePrice != 0)
+                    {
+                        userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
+                    }
+                    else
+                    {
+                        userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.RetailPrice;
+                    }
                     _context.Update(userPiece);
                     await _context.SaveChangesAsync();
                 }
