@@ -15,34 +15,38 @@
 
             @*<div class="d-flex" style="flex-direction: column;  margin: auto; ">
 
-                    <img style="width: 100px; height: 100px;" src="@Url.Content(item.ImageLink)" alt="Image" />
+                <img style="width: 100px; height: 100px;" src="@Url.Content(item.ImageLink)" alt="Image" />
 
-                    @Html.DisplayFor(modelItem => item.Title)
-                    <div>
+                @Html.DisplayFor(modelItem => item.Title)
+                <div>
 
-                        @if (item.AveragePrice > 1)
-                        {
-                            @Html.DisplayFor(modelItem => item.AveragePrice)
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.RetailPrice)
-                        }
-                    </div>
+                    @if (item.AveragePrice > 1)
+                    {
+                        @Html.DisplayFor(modelItem => item.AveragePrice)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.RetailPrice)
+                    }
+                </div>
 
-                </div>*@
+            </div>*@
+        <a asp-action="Details" asp-route-id="@item.Id">
             <div class="card text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
                 <div>
                     <img style="max-height: 100px; max-width: 100px;" class="card-img-top" src="@Url.Content(item.Piece.ImageLink)" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.Piece.Title)</h5>
-                      
-                            @Html.DisplayFor(modelItem => item.Value)
-                       
+
+                        @Html.DisplayFor(modelItem => item.Value)
+
                     </div>
                 </div>
             </div>
+        </a>
         }
+
     </div>
+        
 
 </body>

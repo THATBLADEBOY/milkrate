@@ -43,7 +43,7 @@ namespace milkrate.Controllers
                 return NotFound();
             }
 
-            var userPiece = await _context.UserPiece
+            var userPiece = await _context.UserPiece.Include(up => up.Piece)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userPiece == null)
             {
@@ -92,7 +92,7 @@ namespace milkrate.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["ConditionId"] = new SelectList(_context.Condition, "Id", "Name");
             var userPiece = await _context.UserPiece.FindAsync(id);
             if (userPiece == null)
             {
@@ -106,7 +106,7 @@ namespace milkrate.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ConditionId,UserId,PieceId,Value")] UserPiece userPiece)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ConditionId,UserId,PieceId,Value,Piece,Condition")] UserPiece userPiece)
         {
             if (id != userPiece.Id)
             {
@@ -117,6 +117,9 @@ namespace milkrate.Controllers
             {
                 try
                 {
+                    userPiece.Piece = _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
+                    userPiece.Condition = _context.Condition.Where(c => c.Id == userPiece.ConditionId).FirstOrDefault();
+                    userPiece.Value = userPiece.Condition.ValueMeasure * userPiece.Piece.AveragePrice;
                     _context.Update(userPiece);
                     await _context.SaveChangesAsync();
                 }
