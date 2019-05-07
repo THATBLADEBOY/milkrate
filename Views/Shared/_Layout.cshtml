@@ -33,13 +33,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Pieces" asp-action="Index">Browse</a>
                         </li>
+                       
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="UserPieces" asp-action="Index">Your Closet</a>
                             </li>
                         }
-                        </ul>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -51,7 +52,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="background-color:white;">
         <div class="container">
             &copy; 2019 - milkrate - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

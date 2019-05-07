@@ -26,7 +26,8 @@ namespace milkrate.Models
         public string PageLink { get; set; }
 
         public string ImageLink { get; set; }
-
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
     }
 }

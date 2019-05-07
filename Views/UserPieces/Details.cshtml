@@ -6,57 +6,75 @@
 
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Piece.Title)</h4>
-    <hr />
-    <div class="d-flex justify-content-center">
-        <img style="max-height: 400px; max-width: 400px;" class="card-img-top" src="@Html.DisplayFor(model => model.Piece.ImageLink)" alt="@Html.DisplayNameFor(model => model.Piece.Title)">
+    <div>
+        <h4>@Html.DisplayFor(model => model.Piece.Title)</h4> <h4 class="font-weight-bolder" style="color: forestgreen">$@Html.DisplayFor(model => model.Value)</h4>
     </div>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.Title)
-        </dd>
+    <hr />
+    <div class="d-flex justify-content-center" style="margin-bottom: 3rem;">
+        <div style=" max-width: 400px;">
+            <img class="card-img-top img-fluid" src="@Html.DisplayFor(model => model.Piece.ImageLink)" alt="@Html.DisplayNameFor(model => model.Piece.Title)">
+        </div>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.PieceType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.PieceType)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.RetailPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.RetailPrice)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.AveragePrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.AveragePrice)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.Premium)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.Premium)
-        </dd>
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Piece.ReleaseDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Piece.ReleaseDate)
-        </dd>
-    </dl>
-    <button type="button" class="btn btn-success" onclick="window.location.href = '@Html.DisplayFor(model => model.Piece.PageLink)';" target="_blank">Sell $</button>
-    <a class="btn btn-primary" asp-controller="UserPieces" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-</div>
+        </div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.Title)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Piece.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.PieceType)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Piece.PieceType)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.RetailPrice)
+            </dt>
+            <dd class="col-sm-10 font-weight-bold">
+                $@Html.DisplayFor(model => model.Piece.RetailPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.AveragePrice)
+            </dt>
+            @if (Model.Piece.AveragePrice >= Model.Piece.RetailPrice)
+            {
+                <dd style="color: forestgreen;" class="col-sm-10 font-weight-bold">
+                    $@Html.DisplayFor(model => model.Piece.AveragePrice)
+                </dd>
+            }
+            else
+            {
+                <dd style="color: red;" class="col-sm-10 font-weight-bold">
+                    $@Html.DisplayFor(model => model.Piece.AveragePrice)
+                </dd>
+            }
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.Premium)
+            </dt>
+            @if (Model.Piece.Premium >= 0)
+            {
+                <dd style="color: forestgreen;" class="col-sm-10 font-weight-bold">
+                    @Html.DisplayFor(model => model.Piece.Premium)%
+                </dd>
+            }
+            else
+            {
+                <dd style="color: red;" class="col-sm-10 font-weight-bold">
+                    @Html.DisplayFor(model => model.Piece.Premium)%
+                </dd>
+            }
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Piece.ReleaseDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Piece.ReleaseDate)
+            </dd>
+        </dl>
+        <button type="button" class="btn btn-success" onclick="window.location.href = '@Html.DisplayFor(model => model.Piece.PageLink)';" target="_blank">Sell $</button>
+        <a class="btn btn-primary" style="background-color: #4800ff;" asp-controller="UserPieces" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a style="color: #4800ff" asp-action="Index">Back to Closet</a>
 </div>

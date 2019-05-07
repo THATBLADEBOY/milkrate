@@ -3,12 +3,18 @@
 @{
     ViewData["Title"] = "Details";
 }
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
 
 
 <div>
     <h4>@Html.DisplayFor(model => model.Title)</h4>
     <hr />
-    <img style="max-height: 400px; max-width: 400px;" class="card-img-top" src="@Html.DisplayFor(model => model.ImageLink)" alt="@Html.DisplayNameFor(model => model.Title)">
+    <div class="d-flex justify-content-center" style="margin-bottom: 3rem;">
+        <div style=" max-width: 400px;">
+            <img class="card-img-top img-fluid" src="@Html.DisplayFor(model => model.ImageLink)" alt="@Html.DisplayNameFor(model => model.Title)">
+        </div>
+
+    </div>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -25,21 +31,39 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.RetailPrice)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RetailPrice)
+        <dd class="col-sm-10 font-weight-bold">
+            $@Html.DisplayFor(model => model.RetailPrice)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AveragePrice)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AveragePrice)
-        </dd>
+        @if (Model.AveragePrice >= Model.RetailPrice)
+        {
+            <dd style="color: forestgreen;" class="col-sm-10 font-weight-bold">
+                $@Html.DisplayFor(model => model.AveragePrice)
+            </dd>
+        }
+        else
+        {
+            <dd style="color: red;" class="col-sm-10 font-weight-bold">
+                $@Html.DisplayFor(model => model.AveragePrice)
+            </dd>
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Premium)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Premium)
-        </dd>
+        @if (Model.Premium >= 0)
+        {
+            <dd style="color: forestgreen;" class="col-sm-10 font-weight-bold">
+                @Html.DisplayFor(model => model.Premium)%
+            </dd>
+        }
+        else
+        {
+            <dd style="color: red;" class="col-sm-10 font-weight-bold">
+                @Html.DisplayFor(model => model.Premium)%
+            </dd>
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReleaseDate)
         </dt>
@@ -47,11 +71,17 @@
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
     </dl>
-    <button type="button" class="btn btn-success" onclick="window.location.href = '@Html.DisplayFor(model => model.PageLink)';" target="_blank">Sell $</button>
-
-    <a class="btn btn-primary" asp-controller="UserPieces" asp-action="Create" asp-route-id="@Model.ID">Add To Closet</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a style="background-color: #4800ff; color: white; " class="btn font-weight-bold" asp-controller="UserPieces" asp-action="Create" asp-route-id="@Model.ID">Add To Closet</a>
+    }
+    else
+    {
+        <a style="background-color: #4800ff; color: white; " class="btn font-weight-bold" asp-area="Identity" asp-page="/Account/Login">Login To Add To Your Closet</a>
+    }
+    |  <a style="color: #4800ff" asp-action="Index">Back to Browse</a>
 
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+
 </div>

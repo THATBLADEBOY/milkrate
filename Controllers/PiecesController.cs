@@ -53,7 +53,7 @@ namespace milkrate.Controllers
                     pieces = pieces.OrderByDescending(p => p.ReleaseDate);
                     break;
                 default:
-                    pieces = pieces.OrderBy(p => p.ReleaseDate);
+                    pieces = pieces.OrderByDescending(p => p.ReleaseDate);
                     break;
             }
 

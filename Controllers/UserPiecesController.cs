@@ -99,6 +99,7 @@ namespace milkrate.Controllers
             }
             ViewData["ConditionId"] = new SelectList(_context.Condition, "Id", "Name");
             var userPiece = await _context.UserPiece.FindAsync(id);
+            userPiece.Piece = _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
             if (userPiece == null)
             {
                 return NotFound();
@@ -161,6 +162,7 @@ namespace milkrate.Controllers
 
             var userPiece = await _context.UserPiece
                 .FirstOrDefaultAsync(m => m.Id == id);
+            userPiece.Piece = _context.Piece.Where(p => p.ID == userPiece.PieceId).FirstOrDefault();
             if (userPiece == null)
             {
                 return NotFound();
