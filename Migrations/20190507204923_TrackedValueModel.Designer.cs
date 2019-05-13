@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using milkrate.Data;
 
 namespace milkrate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190507204923_TrackedValueModel")]
+    partial class TrackedValueModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,27 +230,6 @@ namespace milkrate.Migrations
                     b.ToTable("Piece");
                 });
 
-            modelBuilder.Entity("milkrate.Models.TrackedValue", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("PieceId");
-
-                    b.Property<DateTime>("TrackedDate");
-
-                    b.Property<int?>("UserPieceId");
-
-                    b.Property<int>("Value");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserPieceId");
-
-                    b.ToTable("TrackedValue");
-                });
-
             modelBuilder.Entity("milkrate.Models.UserPiece", b =>
                 {
                     b.Property<int>("Id")
@@ -317,13 +298,6 @@ namespace milkrate.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("milkrate.Models.TrackedValue", b =>
-                {
-                    b.HasOne("milkrate.Models.UserPiece")
-                        .WithMany("TrackedValues")
-                        .HasForeignKey("UserPieceId");
                 });
 
             modelBuilder.Entity("milkrate.Models.UserPiece", b =>
