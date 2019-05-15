@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<milkrate.Models.UserPiece>
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 @inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
@@ -21,44 +24,108 @@
 }
 else
 {
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <body>
-            <div style="max-width: 400px">
-                <h3 style="color: #522aff;" class="font-weight-bold">May 10th Droplist</h3><a>View hype rank and more details at SC</a>
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/jackets/e7c505cba49f440d8e04b67abea89ab1_sqr.jpg" alt="First slide">
+        @{ decimal closetValue = 0;}
+        @foreach (var item in Model)
+        {
+            closetValue = closetValue + item.Value;
+        }
+
+
+        <div class="jumbotron jumbotron-fluid shadow" style="background-image: url(images/purpleclothes.png); background-repeat:no-repeat; background-size:cover; background-position:bottom; height: 24rem; ">
+            <div style="margin-top: 2rem;" class="text-center">
+                <h4 style="color: white;">Your closet is currently worth</h4>
+                <h4 style="font-weight:700;" class="text-success display-1"> $@String.Format("{0:n}", closetValue) </h4>
+                <a class="btn btn-light shadow" style="color: #4800ff; font-weight: 600;" asp-area="" asp-controller="UserPieces" asp-action="Index">View Closet</a>
+            </div>
+        </div>
+        <h4 style="font-weight:800; color: #4800ff; margin-bottom: 2rem;">Value Snapshot</h4>
+        <div id="container" class="shadow" style="min-width: 310px; background-color: grey; height: 400px; margin: 0 auto"></div>
+
+        <script>
+    Highcharts.chart('container', {
+        chart: {
+
+            type: 'column'
+        },
+        title: {
+            text: ' '
+        },
+        subtitle: {
+
+        },
+        xAxis: {
+
+color: '#0066FF',
+            categories:
+    @Html.Raw(Json.Serialize(ViewData["FieldsList2"]))
+            ,
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Value ($)'
+            }
+        },
+        tooltip: {
+
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+color: '#32CD32',
+            name: 'Your Pieces',
+            data: @Html.Raw(Json.Serialize(ViewData["FieldsList"]))
+
+        }
+        ]
+    });
+        </script>
+
+        @{List<Piece> recentpieces = ViewData["FieldsList3"] as List<Piece>;
+        }
+
+        <h4 style="font-weight:800; color: #4800ff; margin-top: 1.75rem; ">Recent Releases</h4>
+
+
+
+        <div class="d-flex" style="flex-wrap: wrap;">
+            @foreach(var piece in recentpieces){
+                <a asp-controller="Pieces" asp-action="Details" asp-route-id="@piece.ID">
+                <div class="card shadow text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
+                    <div>
+                        <div style="height:200px;" class="card-img-top">
+                            <img  class="h-100 img-fluid" src="@Url.Content(piece.ImageLink)" alt="Card image cap" style="margin-top: 15px;">
                         </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/tops-sweaters/65ec7f3ad79643dc978b4ac9443371f5_sqr.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/sweatshirts/3d7e068c99d444f886b31e7ca126f71e_sqr.jpg" alt="Third slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/sweatshirts/bc6996a1e0ef46c0b4e53e6ef8fced6b_sqr.jpg" alt="Forth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/jackets/57be2d263d4d4efabcc485bd04e17d1d_sqr.jpg" alt="Fifth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/hats/23b7fcb606344a17a73634fc5fe5fd22_sqr.jpg" alt="Sixth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/add/20190430/a61ae3215ed245e28676fc4a0ec944d1_sqr.jpg" alt="Seventh slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/pants/defad609a28c44be8b4002317802fd08_sqr.jpg" alt="Eighth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/hats/2f21fce93f294e30b3dfb421806b9ecb_sqr.jpg" alt="Ninth slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://www.supremecommunity.com/u/season/spring-summer2019/sweatshirts/3d7e068c99d444f886b31e7ca126f71e_sqr.jpg" alt="Tenth slide">
+                        <div class="card-body" style="background-color: whitesmoke; height: 150px; min-width: 16rem; max-width:16rem; margin-top: 30px; ">
+
+                            <p class="card-title text-left text-truncate" style="color:black; max-width:14rem;  font-weight:600;">@Html.DisplayFor(modelItem => piece.Title)</p>
+                            @if (piece.AveragePrice > 1)
+                            {
+                                <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => piece.AveragePrice)</p>
+                            }
+                            else
+                            {
+                                <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => piece.RetailPrice)</p>
+                            }
+                            <p class="text-muted font-italic font-weight-lighter" style="margin: 0;">Release Date: @Html.DisplayFor(modelItem => piece.ReleaseDate)</p>
                         </div>
                     </div>
                 </div>
-            </div>
-   
+            </a>
+            }
+
+                    <a class="" style="color: #4800ff; align-self: flex-end;" asp-area="" asp-controller="Pieces" asp-action="Index">View More</a>
+
+        </div>
+
     </body>
 }

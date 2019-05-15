@@ -2,7 +2,7 @@
 
 namespace milkrate.Migrations
 {
-    public partial class ConditionModel : Migration
+    public partial class TrackedValueModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

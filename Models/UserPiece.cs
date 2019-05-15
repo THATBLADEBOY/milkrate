@@ -24,5 +24,7 @@ namespace milkrate.Models
         public Condition Condition { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public List<TrackedValue> TrackedValues { get; set; }
     }
 }

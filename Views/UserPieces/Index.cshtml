@@ -14,7 +14,7 @@
 
     <div class="d-flex">
         <h4 class="text-muted">Closet Value: </h4>
-        <h4 class="text-success"> $@closetValue</h4>
+        <h4 class="text-success"> $@String.Format("{0:n}", closetValue)</h4>
     </div>
 
     <div class="d-flex justify-content-center" style="flex-basis: 20%; flex-wrap: wrap; margin: auto;">
@@ -22,10 +22,12 @@
         @foreach (var item in Model)
         {
             <a asp-action="Details" asp-route-id="@item.Id">
-                <div class="card text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
+                <div class="card shadow text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
                     <div>
-                        <img class="card-img-top img-fluid" src="@Url.Content(item.Piece.ImageLink)" alt="Card image cap">
-                        <div class="card-body">
+                        <div style="height:200px;" class="card-img-top">
+                            <img class="h-100 img-fluid" src="@Url.Content(item.Piece.ImageLink)" alt="Card image cap" style="margin-top: 15px;">
+                        </div>
+                        <div class="card-body" style="height: 150px; min-width: 16rem; max-width:16rem; margin-top: 30px;">
                             <p class="card-title text-muted font-italic font-weight-lighter">@Html.DisplayFor(modelItem => item.Piece.Title)</p>
 
                             <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => item.Value)</p>

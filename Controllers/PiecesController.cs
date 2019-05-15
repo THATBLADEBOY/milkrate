@@ -29,7 +29,7 @@ namespace milkrate.Controllers
         // GET: Pieces
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["CurrentFilter"] = searchString;
             var pieces = from p in _context.Piece
@@ -43,8 +43,8 @@ namespace milkrate.Controllers
 
             switch (sortOrder)
             {
-                case "title_desc":
-                    pieces = pieces.OrderByDescending(p => p.Title);
+                case "title":
+                    pieces = pieces.OrderBy(p => p.Title);
                     break;
                 case "Date":
                     pieces = pieces.OrderBy(p => p.ReleaseDate);
@@ -74,6 +74,24 @@ namespace milkrate.Controllers
             {
                 return NotFound();
             }
+
+            var trackedValues = _context.TrackedValue.Where(tv => tv.PieceId == piece.ID).OrderBy(tv => tv.TrackedDate);
+            List<int> trackedValuesValue = new List<int> { };
+            List<string> trackedValuesDate = new List<string> { };
+
+            foreach (var value in trackedValues)
+            {
+                trackedValuesValue.Add(value.Value);
+            }
+            foreach (var value in trackedValues)
+            {
+                trackedValuesDate.Add(value.TrackedDate.ToString("MM-dd-yyyy"));
+            }
+            ViewData["FieldsList"] = trackedValuesValue;
+            ViewData["FieldsList2"] = trackedValuesDate;
+
+
+
 
             return View(piece);
         }

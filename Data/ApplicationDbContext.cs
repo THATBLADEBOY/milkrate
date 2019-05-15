@@ -16,6 +16,7 @@ namespace milkrate.Data
         public DbSet<milkrate.Models.Piece> Piece { get; set; }
         public DbSet<milkrate.Models.UserPiece> UserPiece { get; set; }
         public DbSet<milkrate.Models.Condition> Condition { get; set; }
+        public DbSet<milkrate.Models.TrackedValue> TrackedValue {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

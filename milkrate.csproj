@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\images\purpleclothes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\images\purpleclothes.png" />
+  </ItemGroup>
 </Project>

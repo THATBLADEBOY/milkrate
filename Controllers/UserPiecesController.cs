@@ -45,6 +45,23 @@ namespace milkrate.Controllers
 
             var userPiece = await _context.UserPiece.Include(up => up.Piece)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var trackedValues = _context.TrackedValue.Where(tv => tv.PieceId == userPiece.PieceId).OrderBy(tv => tv.TrackedDate);
+            List<int> trackedValuesValue = new List<int> { };
+            List<string> trackedValuesDate = new List<string> { };
+
+            foreach (var value in trackedValues)
+            {
+                trackedValuesValue.Add(value.Value);
+            }
+            foreach (var value in trackedValues)
+            {
+                trackedValuesDate.Add(value.TrackedDate.ToString("MM-dd-yyyy"));
+            }
+            ViewData["FieldsList"] = trackedValuesValue;
+            ViewData["FieldsList2"] = trackedValuesDate;
+
+
             if (userPiece == null)
             {
                 return NotFound();

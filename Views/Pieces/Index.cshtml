@@ -5,41 +5,40 @@
 }
 <body>
 
+
     <form asp-action="Index" method="get">
         <div class="form-actions no-color">
-            <p class="text-muted">
-                Find by name or type: <input class="input-group input-group-sm mb-3" type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            </p>
+        <input class="input-group input-group-sm form-control mb-3 shadow" type="text" name="SearchString" placeholder="Search for pieces" value="@ViewData["currentFilter"]" />
         </div>
     </form>
 
     <a class="text-muted font-italic font-weight-normal" asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">@Html.DisplayNameFor(model => model.Title)</a> | <a class="text-muted font-italic font-weight-normal" asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.ReleaseDate)</a>
     <div class="d-flex justify-content-center" style="flex-basis: 20%; flex-wrap: wrap; margin: auto;">
-        
+
         @foreach (var item in Model)
         {
-            <a asp-action="Details" asp-route-id="@item.ID">
-                <div class="card text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
-                    <div>
-                        <div style="height:200px;" class="card-img-top">
-                            <img  class="h-100 img-fluid" src="@Url.Content(item.ImageLink)" alt="Card image cap" style="margin-top: 15px;">
-                        </div>
-                        <div class="card-body" style="background-color: whitesmoke; height: 150px; min-width: 16rem; max-width:16rem; margin-top: 30px; ">
+        <a asp-action="Details" asp-route-id="@item.ID">
+            <div class="card shadow text-center border-light d-flex align-items-center" style="width: 16rem; margin: .5rem;">
+                <div>
+                    <div style="height:200px;" class="card-img-top">
+                        <img class="h-100 img-fluid" src="@Url.Content(item.ImageLink)" alt="Card image cap" style="margin-top: 15px;">
+                    </div>
+                    <div class="card-body" style="background-color: whitesmoke; height: 150px; min-width: 16rem; max-width:16rem; margin-top: 30px; ">
 
-                            <p class="card-title text-left text-truncate" style="color:black; max-width:14rem;  font-weight:600;">@Html.DisplayFor(modelItem => item.Title)</p>
-                            @if (item.AveragePrice > 1)
+                        <p class="card-title text-left text-truncate" style="color:black; max-width:14rem;  font-weight:600;">@Html.DisplayFor(modelItem => item.Title)</p>
+                        @if (item.AveragePrice > 1)
                             {
-                                <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => item.AveragePrice)</p>
+                        <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => item.AveragePrice)</p>
                             }
                             else
                             {
-                                <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => item.RetailPrice)</p>
+                        <p class="text-success font-weight-bold">$@Html.DisplayFor(modelItem => item.RetailPrice)</p>
                             }
-                            <p class="text-muted font-italic font-weight-lighter" style="margin: 0;">Release Date: @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
-                        </div>
+                        <p class="text-muted font-italic font-weight-lighter" style="margin: 0;">Release Date: @Html.DisplayFor(modelItem => item.ReleaseDate)</p>
                     </div>
                 </div>
-            </a>
+            </div>
+        </a>
         }
     </div>
 
